@@ -93,9 +93,9 @@ public class ProductServiceImpl implements ProductService{
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize,sortByAndOrder);
 
        Specification<Product> spec = Specification.where(null);
-        if (keyword != null && !keyword.isEmpty()) {
+        if ( keyWord != null && ! keyWord.isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("productName")), "%" + keyword.toLowerCase() + "%"));
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("productName")), "%" +  keyWord.toLowerCase() + "%"));
         }
 
         if (category != null && !category.isEmpty()) {
