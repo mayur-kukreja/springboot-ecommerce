@@ -91,7 +91,17 @@ public class ProductServiceImpl implements ProductService{
 
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize,sortByAndOrder);
 
-        Page<Product> pageProducts =  productRepository.findAll(pageDetails);
+       Specification<Product> spec = Specification.where(null);
+        if (keyword != null && !keyword.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("productName")), "%" + keyword.toLowerCase() + "%"));
+        }
+
+        if (category != null && !category.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("category").get("categoryName"), category));
+        }
+        Page<Product> pageProducts =  productRepository.findAll(spec,pageDetails);
 
         List<Product> products = pageProducts.getContent();
 
