@@ -52,6 +52,7 @@ public class JwtUtils {
         return ResponseCookie.from(jwtCookie, jwt).path("/api")
                 .maxAge(24*60*60)
                 .httpOnly(false)
+                .secure(false)
                 .build();
     }
 
