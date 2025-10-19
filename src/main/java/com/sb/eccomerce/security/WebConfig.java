@@ -12,10 +12,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${frontend.url}")
     String frontEndUrl;
 
-    public void addCorsMapping(CorsRegistry registry) {
+    public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000",frontEndUrl)
-                .allowedMethods("GET","POST","PUT","DELETE","OPTIOMS")
+                .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }

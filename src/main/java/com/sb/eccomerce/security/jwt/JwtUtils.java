@@ -38,8 +38,10 @@ public class JwtUtils {
     public String getJwtFromCookies(HttpServletRequest request){
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);
         if (cookie != null){
+            System.out.println("cookies found");
             return cookie.getValue();
         } else {
+            System.out.println("cookies not found");
             return null;
         }
 
