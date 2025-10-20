@@ -37,11 +37,12 @@ public class JwtUtils {
 
     public String getJwtFromCookies(HttpServletRequest request){
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);
+        logger.info("inside getJwtFromCookies method");
         if (cookie != null){
-            logger.error("cookies found");
+            logger.info("cookies found");
             return cookie.getValue();
         } else {
-            logger.error("cookies not found");
+            logger.info("cookies not found");
             return null;
         }
 
@@ -57,6 +58,7 @@ public class JwtUtils {
     }
 
     public ResponseCookie getCleanJwtCookie(){
+        logger.info("inside getCleanJwtCookie method");
         ResponseCookie cookie = ResponseCookie.from(jwtCookie,null).path("/api").build();
         return cookie;
     }
@@ -71,6 +73,7 @@ public class JwtUtils {
 //    }
 
     public String generateTokenFromUsername(String  username){
+        logger.info("inside generateTokenFromUsername method");
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
@@ -80,6 +83,7 @@ public class JwtUtils {
     }
 
     public String getUserNameFromHJwtToken(String token){
+        logger.info("inside getUserNameFromHJwtToken method");
         return Jwts.parser()
                 .verifyWith((SecretKey) key())
                 .build().parseSignedClaims(token)
@@ -87,10 +91,12 @@ public class JwtUtils {
     }
 
     private Key key(){
+        logger.info("inside getKey method");
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
     public boolean validateJwtToken(String authToken){
+        logger.info("inside validateJwtToken method");
         try{
             Jwts.parser().verifyWith((SecretKey) key()).build().parseSignedClaims(authToken);
             return true;

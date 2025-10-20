@@ -29,7 +29,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException{
-        logger.debug("AuthTokenFilter called for URI: {}", request.getRequestURI());
+        logger.info("AuthTokenFilter called for URI: {}", request.getRequestURI());
         try{
             String jwt = parseJwt(request);
             if(jwt != null && jwtUtils.validateJwtToken(jwt)){
@@ -56,7 +56,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private String parseJwt(HttpServletRequest request){
         String jwt = jwtUtils.getJwtFromCookies(request);
-        logger.debug("AuthTokenFilter.java: {}", jwt);
+        logger.info("AuthTokenFilter.java: {} inside parse jwt method", jwt);
         return jwt;
     }
 
